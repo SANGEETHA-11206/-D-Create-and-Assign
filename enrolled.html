@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enrolled Users — Modern UI</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #061225, #09153b, #040a17);
+      font-family: "Inter", sans-serif;
+      color: #fff;
+      padding-bottom: 60px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 40px 0;
+    }
+    .hero h1 {
+      font-weight: 800;
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+    .hero p {
+      color: rgba(255,255,255,0.8);
+    }
+
+    .course-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      transition: 0.3s ease;
+    }
+    .course-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .course-title {
+      font-size: 22px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin: 4px;
+      font-size: 14px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .empty-text {
+      font-size: 15px;
+      opacity: 0.8;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="hero">
+    <h1>Enrolled Users</h1>
+    <p>A centralized enrollment view that lets you track learner participation across all courses in real time</p>
+  </div>
+
+  <div class="container">
+
+    {% if enrollments %}
+      {% for course, users in enrollments.items() %}
+        <div class="course-card mb-4">
+          
+          <div class="course-title">
+            <i class="bi bi-journal-check" style="color:#7b61ff; font-size:22px;"></i>
+            {{ course }}
+          </div>
+
+          <hr style="border-color: rgba(255,255,255,0.15);">
+
+          <p class="fw-bold mb-2">Enrolled Users:</p>
+
+          {% if users %}
+            {% for u in users %}
+              <span class="user-badge">
+                <i class="bi bi-person-fill me-1"></i>{{ u }}
+              </span>
+            {% endfor %}
+          {% else %}
+            <p class="empty-text">No users enrolled yet.</p>
+          {% endif %}
+
+        </div>
+      {% endfor %}
+    {% else %}
+      <h4 class="text-center mt-5">No courses available yet.</h4>
+    {% endif %}
+
+  </div>
+
+</body>
+</html>

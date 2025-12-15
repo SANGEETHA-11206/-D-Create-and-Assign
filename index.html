@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>LEARN FLOW — Home</title>
+
+<!-- Bootstrap for quick grid & buttons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --glass-bg: rgba(255,255,255,0.06);
+    --accent-a: #7b61ff;
+    --accent-b: #00d2ff;
+  }
+
+  html,body{height:100%;margin:0;font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#eaf3ff}
+  body{
+    /* animated multi-stop gradient */
+    background: linear-gradient(120deg,#071032 0%, #0f1b3a 30%, #4b143f 60%, #561b7a 100%);
+    background-size: 300% 300%;
+    animation: bgShift 14s ease infinite;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+  @keyframes bgShift{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+
+  /* soft floating blobs (pure CSS) */
+  .blobs{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background:
+      radial-gradient(circle at 10% 20%, rgba(123,97,255,0.12), transparent 10%),
+      radial-gradient(circle at 85% 30%, rgba(0,210,255,0.08), transparent 12%),
+      radial-gradient(circle at 70% 80%, rgba(255,255,255,0.02), transparent 20%);
+    filter: blur(20px) saturate(130%);
+    animation: floatBlobs 12s ease-in-out infinite;
+  }
+  @keyframes floatBlobs{ 0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)} }
+
+  /* central container */
+  .wrap{ position:relative; z-index:2; max-width:1100px; margin:48px auto; padding:24px; }
+
+  /* card */
+  .card-main{
+    display:grid;
+    grid-template-columns: 1fr 520px;
+    gap:28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+    border-radius:20px;
+    padding:26px;
+    box-shadow: 0 20px 60px rgba(2,6,20,0.6);
+    border: 1px solid rgba(255,255,255,0.035);
+    align-items:center;
+    overflow:hidden;
+    transform-style:preserve-3d;
+  }
+
+  /* left: text & buttons */
+  .left {
+    padding:6px 16px;
+  }
+  .logo {
+    font-size:64px; font-weight:900; letter-spacing:2px;
+    color:#fff;
+    text-shadow: 0 6px 24px rgba(123,97,255,0.18), 0 0 10px rgba(255,255,255,0.08);
+    display:inline-block;
+  }
+  .title { font-size:28px; font-weight:800; margin-top:6px; color:#f6fbff; }
+  .lead { color: rgba(230,245,255,0.82); margin-top:8px; margin-bottom:18px; }
+
+  .cta-row { display:flex; flex-direction:column; gap:12px; width:100%; max-width:360px; margin-top:10px; }
+  .btn-cta {
+    border-radius:14px;
+    padding:12px 18px;
+    font-weight:800;
+    border:none;
+    color:#06122a;
+    background: linear-gradient(90deg,var(--accent-a),var(--accent-b));
+    box-shadow: 0 12px 36px rgba(123,97,255,0.14);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .btn-cta:hover{ transform:translateY(-4px); filter:brightness(1.03) }
+
+  /* right: illustration box */
+  .illustration-wrap{ display:flex; align-items:center; justify-content:center; }
+  .illustration {
+    width:100%;
+    max-width:520px;
+    border-radius:16px;
+    box-shadow: 0 30px 80px rgba(7,11,30,0.6);
+    border:1px solid rgba(255,255,255,0.035);
+    transform: translateZ(0);
+  }
+
+  /* small decorative ribbon */
+  .ribbon{
+    display:inline-flex; align-items:center; gap:10px;
+    background: linear-gradient(90deg,var(--accent-a),var(--accent-b));
+    color:#06122a; padding:8px 12px; border-radius:999px; font-weight:800;
+    box-shadow: 0 10px 30px rgba(11,10,30,0.18); margin-top:14px;
+  }
+
+  /* tilt effect (mouse) */
+  .card-main.tilt { transition: transform .18s ease; will-change: transform; }
+
+  /* responsive */
+  @media (max-width:980px){
+    .card-main{ grid-template-columns: 1fr; padding:18px; gap:16px; }
+    .illustration{ order: -1; width:100%; max-width:760px; }
+    .cta-row{ max-width:100% }
+  }
+</style>
+</head>
+<body>
+  <div class="blobs" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="card-main" id="cardMain">
+      <!-- LEFT -->
+      <div class="left">
+        <div class="logo">LF</div>
+        <div class="title">LEARN FLOW</div>
+        <div class="lead">Create, assign and track learning — fast and beautiful. Build courses, enroll learners and show progress.</div>
+
+        <div class="ribbon" aria-hidden="true">🏆 Certification Included</div>
+
+        <div class="cta-row">
+          <a href="/courses" class="btn btn-cta">Create New Course</a>
+          <a href="/assign" class="btn btn-cta">Assign Course</a>
+          <a href="/enrolled" class="btn btn-cta">View Enrollments</a>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="illustration-wrap">
+        <!-- use local static image if available, otherwise fallback to Unsplash -->
+        <img
+          src="{{ url_for('static', filename='learnflow.jpg') }}"
+          onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1200&auto=format&fit=crop&crop=faces';"
+          alt="Learning illustration"
+          class="illustration">
+      </div>
+    </div>
+  </div>
+
+<script>
+  // subtle tilt interaction for the glass card (desktop only)
+  (function(){
+    const card = document.getElementById('cardMain');
+    function onMove(e){
+      const w = card.offsetWidth, h = card.offsetHeight;
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) - w/2;
+      const y = (e.clientY - rect.top) - h/2;
+      const rx = (-y / h) * 6; // rotateX
+      const ry = (x / w) * 6; // rotateY
+      card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
+    }
+    function onLeave(){
+      card.style.transform = '';
+    }
+    // only enable on wide screens
+    function enableTilt(){
+      if(window.innerWidth > 980){
+        card.addEventListener('mousemove', onMove);
+        card.addEventListener('mouseleave', onLeave);
+      } else {
+        card.removeEventListener('mousemove', onMove);
+        card.removeEventListener('mouseleave', onLeave);
+        card.style.transform = '';
+      }
+    }
+    window.addEventListener('resize', enableTilt);
+    enableTilt();
+  })();
+</script>
+</body>
+</html>
